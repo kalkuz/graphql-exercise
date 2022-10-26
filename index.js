@@ -170,6 +170,9 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
+    me: (root, args, usr) => {
+      return usr?.username ? usr : null;
+    },
     // allBooks: (root, { author, genre }) => books.filter((b) => 
     //   (genre ? b.genres?.includes(genre) : true) &&
     //   (author ? b.author === author : true)
@@ -292,7 +295,7 @@ const resolvers = {
       }
     },
     addBook: async (root, args, usr) => {
-      if(!usr) throw new Error('You are not allowed in here');
+      if(!usr.username) throw new Error('You are not allowed in here');
 
       let author = await Author.findOne({ name: args.author });
       if (!author){
@@ -308,7 +311,7 @@ const resolvers = {
     //   return authors;
     // }
     editAuthor: async (root, { name, setBornTo }, usr) => {
-      if(!usr) throw new Error('You are not allowed in here');
+      if(!usr.username) throw new Error('You are not allowed in here');
 
       const updated = await Author.findOneAndUpdate({ name }, { born: setBornTo }, { new: true });
       return updated;
@@ -327,6 +330,7 @@ const server = new ApolloServer({
       const user =  await User.findOne({ _id: usrid });
       return user.toJSON();
     }
+    else return null;
   }
 })
 
