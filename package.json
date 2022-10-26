@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^3.10.3"
+    "apollo-server": "^3.10.3",
+    "crypto": "^1.0.1",
+    "jwt-simple": "^0.5.6",
+    "mongoose": "^6.7.0",
+    "nodemon": "^2.0.20"
   }
 }
